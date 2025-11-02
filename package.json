@@ -1,0 +1,84 @@
+{
+    "name": "vscode-file-obscura",
+    "displayName": "File Obscura",
+    "description": "Protects files with allowlist mode. Files not included in the allowlist are automatically masked and can be displayed after confirmation.",
+    "version": "1.0.0",
+    "publisher": "miyazaki",
+    "icon": "resources/icon.png",
+    "author": {
+        "name": "Miyazaki Yuma"
+    },
+    "homepage": "https://github.com/miyazakiyuma/vscode-file-obscura#readme",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/miyazakiyuma/vscode-file-obscura.git"
+    },
+    "bugs": {
+        "url": "https://github.com/miyazakiyuma/vscode-file-obscura/issues"
+    },
+    "license": "MIT",
+    "keywords": [
+        "security",
+        "privacy",
+        "env",
+        "secrets",
+        "credentials",
+        "mask",
+        "protect"
+    ],
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "configuration": {
+            "title": "File Obscura",
+            "properties": {
+                "fileObscura.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable masking feature"
+                },
+                "fileObscura.allowlist": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Allowlist: Files included in this list will not be masked. If empty, all files will be masked. (glob pattern or filename)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "scope": "resource"
+                },
+                "fileObscura.revealTimeout": {
+                    "type": "number",
+                    "default": 5,
+                    "description": "Timeout in minutes for revealed files. Files are automatically removed from revealed list after this time.",
+                    "minimum": 1
+                }
+            }
+        },
+        "customEditors": [
+            {
+                "viewType": "fileObscura.maskedEditor",
+                "displayName": "Masked File Editor (Allowlist)",
+                "selector": [
+                    {
+                        "filenamePattern": "**/*"
+                    }
+                ],
+                "priority": "default"
+            }
+        ]
+    },
+    "dependencies": {
+        "minimatch": "^9.0.0"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.75.0"
+    }
+}
